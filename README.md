@@ -1,6 +1,6 @@
-- 👋 Hi, I’m @0xItoHub.
-- 👀 I’m interested in Game and Crypto.
-- 🌱 I’m currently learning Python and Java, SQL.
+- 👋 Hi, I’m mowmow.
+- 👀 I’m interested in Python and Java.
+- 🌱 I’m currently learning Django and SpringBoot.
 
 
 <!---
