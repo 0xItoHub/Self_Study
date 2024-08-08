@@ -1,9 +1,8 @@
-- 👋 Hi, I’m mowmow.
-- 👀 I’m interested in Python and Java.
-- 🌱 I’m currently learning Django and SpringBoot.
 
+### Self Introduction
 
-<!---
-0xItoHub/0xItoHub is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+- バックエンド開発を中心に学習しています。
+- 使用言語：**Python**、**Java**
+- 技術スキル（学習中）：**SQL**（データベース操作）、**Docker**（コンテナ化）、**AWS**（クラウドサービス）
+- 目標：効率的でスケーラブルなシステムの構築と技術力の向上
+
