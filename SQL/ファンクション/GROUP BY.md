@@ -1,3 +1,9 @@
+SELECT job_id, COUNT(department_id)
+FROM employees WHERE commission_pct
+IS NOT NULL GROUP BY department_id
+HAVING count(*)>4;
+
+
 このSQLクエリにはいくつかの誤りがあります。問題点とその修正方法を解説します。
 
 ### 問題点1: `GROUP BY` と `SELECT` の不一致
