@@ -4,4 +4,4 @@
 4. Portの確認
 5. Locateの設定（Japanese、Japan）
 6. Finish
-7. ブラウザで「pgadmin」と入力し象のアイコンが表示されればOK
+7. Windows左下の検索バーで「pgadmin」と入力し象のアイコンが表示されればOK
