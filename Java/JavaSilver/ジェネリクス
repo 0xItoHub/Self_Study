@@ -1,0 +1,135 @@
+Javaのジェネリクス（Generics）は、クラスやメソッドにおいて、データ型をパラメータとして扱うことができる機能です。これにより、同じクラスやメソッドを異なるデータ型で再利用でき、型安全性を確保しながらコードの再利用性を高めることができます。
+
+### ジェネリクスの基本的な考え方
+
+ジェネリクスを使うことで、クラスやメソッドを特定のデータ型に依存しない形で定義し、実際に使用する際に具体的な型を指定することができます。これにより、以下のメリットが得られます。
+
+1. **型安全性の向上**: コンパイル時に型のチェックが行われるため、不適切な型が使用された場合にコンパイルエラーが発生します。
+2. **キャストの省略**: 型を明示的に指定することで、不要なキャスト操作を省略できます。
+3. **コードの再利用性の向上**: 一つのクラスやメソッドで複数の型に対応できるため、コードの再利用性が高まります。
+
+### ジェネリッククラスの定義
+
+ジェネリッククラスは、クラス宣言時にデータ型のパラメータを受け取るクラスです。型パラメータは通常、`<T>`のように指定します。
+
+#### 例：ジェネリッククラスの定義
+
+```java
+public class Box<T> {
+    private T item;
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public T getItem() {
+        return item;
+    }
+}
+```
+
+この`Box`クラスは、任意の型`T`を受け取ることができます。`T`は、クラスが使用される際に具体的な型に置き換えられます。
+
+#### 例：ジェネリッククラスの使用
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Box<String> stringBox = new Box<>();
+        stringBox.setItem("Hello");
+        System.out.println(stringBox.getItem());
+
+        Box<Integer> integerBox = new Box<>();
+        integerBox.setItem(123);
+        System.out.println(integerBox.getItem());
+    }
+}
+```
+
+この例では、`Box<String>`として`String`型を保持するボックスと、`Box<Integer>`として`Integer`型を保持するボックスを作成しています。
+
+### ジェネリックメソッド
+
+ジェネリックメソッドは、メソッド単位で型パラメータを指定できるメソッドです。メソッド名の前に型パラメータを指定します。
+
+#### 例：ジェネリックメソッドの定義
+
+```java
+public class Main {
+    public static <T> void printArray(T[] array) {
+        for (T element : array) {
+            System.out.println(element);
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] stringArray = {"A", "B", "C"};
+        Integer[] intArray = {1, 2, 3};
+
+        printArray(stringArray);  // String型の配列
+        printArray(intArray);     // Integer型の配列
+    }
+}
+```
+
+この例では、`printArray`メソッドがジェネリックメソッドとして定義されており、配列の要素の型に依存せずにどの型の配列でも処理できます。
+
+### バウンディング（境界付きワイルドカード）
+
+ジェネリクスでは、型パラメータに対して上限または下限を設定することができます。これをバウンディング（境界）と呼びます。
+
+#### 上限境界（extends）
+
+型パラメータに上限を設定して、指定したクラスまたはそのサブクラスに制限することができます。
+
+```java
+public static <T extends Number> void printNumbers(T[] array) {
+    for (T number : array) {
+        System.out.println(number);
+    }
+}
+```
+
+この場合、`T`は`Number`クラスまたはそのサブクラス（`Integer`、`Double`など）でなければなりません。
+
+#### 下限境界（super）
+
+型パラメータに下限を設定して、指定したクラスまたはそのスーパークラスに制限することができます。
+
+```java
+public static void addNumbers(List<? super Integer> list) {
+    list.add(1);
+    list.add(2);
+    list.add(3);
+}
+```
+
+この場合、`list`は`Integer`またはそのスーパークラス（`Number`や`Object`など）の型を受け取ることができます。
+
+### ワイルドカード（`?`）
+
+ワイルドカードは、ジェネリクスの型パラメータを柔軟に扱うために使用されます。
+
+- **`?`**: 任意の型を表すワイルドカード。
+- **`? extends T`**: `T`またはそのサブクラスの型。
+- **`? super T`**: `T`またはそのスーパークラスの型。
+
+#### 例：ワイルドカードの使用
+
+```java
+public static void printList(List<?> list) {
+    for (Object element : list) {
+        System.out.println(element);
+    }
+}
+```
+
+このメソッドは、どのような型のリストでも受け取ることができます。
+
+### まとめ
+
+- **ジェネリクス**は、クラスやメソッドを型に依存しない形で定義し、型安全性を確保しながらコードの再利用性を向上させるための機能です。
+- **ジェネリッククラス**や**ジェネリックメソッド**を使用することで、異なる型に対応する汎用的なコードを記述できます。
+- **バウンディング**や**ワイルドカード**を使って、ジェネリクスの型パラメータに制限を設けることができます。
+
+ジェネリクスを効果的に使用することで、より安全で柔軟なコードを書くことができ、異なる型に対応するクラスやメソッドを簡単に再利用することが可能になります。
