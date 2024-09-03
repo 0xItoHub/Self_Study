@@ -1,0 +1,114 @@
+**リソースバンドル**（ResourceBundle）は、Javaでアプリケーションの国際化（i18n）をサポートするためのクラスです。リソースバンドルを使用すると、異なるロケール（言語や国）に応じて表示するメッセージやその他のリソース（例: エラーメッセージ、UIテキスト、フォーマット）を動的に切り替えることができます。これにより、アプリケーションを多言語対応にすることが簡単にできます。
+
+### リソースバンドルの基本的な概念
+
+リソースバンドルは、特定のロケールに関連付けられたキーと値のペアを含むプロパティファイルやクラスファイルのセットです。`ResourceBundle`クラスは、これらのファイルから適切なリソースを読み込むために使用されます。リソースバンドルには、プロパティファイルベースの`PropertyResourceBundle`と、プログラム的に生成されたクラスベースの`ListResourceBundle`があります。
+
+#### リソースバンドルのプロパティファイル
+
+最も一般的なリソースバンドルは、プロパティファイル形式です。各プロパティファイルは、特定のロケール用に作成され、`baseName_language_country.properties`の形式で命名されます。
+
+- **ベースのプロパティファイル**: `messages.properties`
+- **英語（アメリカ）のプロパティファイル**: `messages_en_US.properties`
+- **日本語のプロパティファイル**: `messages_ja_JP.properties`
+
+### リソースバンドルの使用例
+
+以下に、リソースバンドルを使ってメッセージをローカライズする簡単な例を示します。
+
+#### 1. プロパティファイルの作成
+
+まず、`messages.properties`というベースのプロパティファイルと、英語と日本語のロケール用のプロパティファイルを作成します。
+
+- `messages.properties`（デフォルト）
+    ```properties
+    greeting=Hello
+    farewell=Goodbye
+    ```
+
+- `messages_en_US.properties`（アメリカ英語）
+    ```properties
+    greeting=Hello
+    farewell=Goodbye
+    ```
+
+- `messages_ja_JP.properties`（日本語）
+    ```properties
+    greeting=こんにちは
+    farewell=さようなら
+    ```
+
+#### 2. Javaコードでリソースバンドルを使用
+
+次に、Javaコードで`ResourceBundle`クラスを使って、適切なロケールのメッセージを読み込みます。
+
+```java
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+public class ResourceBundleExample {
+    public static void main(String[] args) {
+        // アメリカ英語のロケールを指定
+        Locale usLocale = new Locale("en", "US");
+        ResourceBundle bundleUS = ResourceBundle.getBundle("messages", usLocale);
+        
+        // 日本語のロケールを指定
+        Locale japanLocale = new Locale("ja", "JP");
+        ResourceBundle bundleJP = ResourceBundle.getBundle("messages", japanLocale);
+
+        // メッセージを表示
+        System.out.println("US Locale:");
+        System.out.println("Greeting: " + bundleUS.getString("greeting"));
+        System.out.println("Farewell: " + bundleUS.getString("farewell"));
+
+        System.out.println("\nJapan Locale:");
+        System.out.println("Greeting: " + bundleJP.getString("greeting"));
+        System.out.println("Farewell: " + bundleJP.getString("farewell"));
+    }
+}
+```
+
+#### 3. 出力結果
+
+上記のコードを実行すると、指定したロケールに応じたメッセージが表示されます。
+
+```
+US Locale:
+Greeting: Hello
+Farewell: Goodbye
+
+Japan Locale:
+Greeting: こんにちは
+Farewell: さようなら
+```
+
+### リソースバンドルのその他の機能
+
+#### フォールバック機能
+
+リソースバンドルは、指定したロケール用のプロパティファイルが見つからない場合、フォールバックメカニズムを持っています。たとえば、`messages_ja_JP.properties`が存在しない場合は、`messages_ja.properties`を探し、さらにそれもない場合は`messages.properties`を使用します。
+
+#### リソースバンドルの継承
+
+`ListResourceBundle`を使用して、プログラム的にリソースバンドルを定義することもできます。これにより、Javaコード内でリソースを直接定義できます。
+
+```java
+import java.util.ListResourceBundle;
+
+public class Messages_en_US extends ListResourceBundle {
+    protected Object[][] getContents() {
+        return new Object[][] {
+            { "greeting", "Hello" },
+            { "farewell", "Goodbye" }
+        };
+    }
+}
+```
+
+#### リソースバンドルのキャッシュ
+
+`ResourceBundle`は、リソースバンドルを効率的に管理するためにキャッシュを使用します。通常、バンドルは最初に読み込まれるとメモリに保持され、再度ロードする必要がなくなります。
+
+### まとめ
+
+リソースバンドルは、Javaアプリケーションの国際化を実現するための強力なツールです。異なるロケールに対応したメッセージやリソースを効率的に管理し、アプリケーションがユーザーの言語や地域に合わせて適切に動作するようにします。リソースバンドルを使いこなすことで、多言語対応のアプリケーションを容易に構築することが可能です。
