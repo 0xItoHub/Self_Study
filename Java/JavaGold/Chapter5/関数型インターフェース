@@ -1,0 +1,87 @@
+Javaにおける関数型インターフェース（Functional Interface）は、**1つの抽象メソッドを持つインターフェース**です。関数型インターフェースは、ラムダ式やメソッド参照を使って簡潔に実装することができ、Java 8以降で導入された**ラムダ式**の基盤として機能します。
+
+### 関数型インターフェースの特徴
+
+1. **1つの抽象メソッド**: 関数型インターフェースは1つの抽象メソッドしか持つことができません。これにより、インターフェースがどのようなラムダ式で表現されるかが明確になります。
+2. **デフォルトメソッドと静的メソッド**: 関数型インターフェースにはデフォルトメソッドや静的メソッドを含めることができますが、抽象メソッドは1つだけです。
+3. **`@FunctionalInterface`アノテーション**: 関数型インターフェースには`@FunctionalInterface`アノテーションを付けることが推奨されます。このアノテーションは、コンパイラに対してそのインターフェースが関数型であることを明示し、1つの抽象メソッドを持つことを強制します。
+
+### 例: 関数型インターフェースの定義
+
+```java
+@FunctionalInterface
+interface MyFunctionalInterface {
+    void execute(); // 抽象メソッド
+}
+```
+
+上記の`MyFunctionalInterface`は、1つの抽象メソッド`execute()`を持つ関数型インターフェースです。これにより、`MyFunctionalInterface`をラムダ式で実装できます。
+
+### ラムダ式を使った関数型インターフェースの実装
+
+関数型インターフェースは、通常の匿名クラスを使用して実装できますが、ラムダ式を使うとコードがより簡潔になります。
+
+```java
+public class FunctionalInterfaceExample {
+    public static void main(String[] args) {
+        // ラムダ式による関数型インターフェースの実装
+        MyFunctionalInterface myFunc = () -> System.out.println("Hello, Functional Interface!");
+
+        // メソッドの呼び出し
+        myFunc.execute(); // 出力: Hello, Functional Interface!
+    }
+}
+```
+
+### Java標準の関数型インターフェース
+
+Java 8以降、Java標準ライブラリには多くの関数型インターフェースが提供されています。以下はそのいくつかです。
+
+1. **`Predicate<T>`**: 引数を受け取り、`boolean`を返す関数を表します。
+    - 抽象メソッド: `boolean test(T t)`
+    - 例: リスト内の要素をフィルタリングするために使用されます。
+
+    ```java
+    Predicate<Integer> isEven = (n) -> n % 2 == 0;
+    System.out.println(isEven.test(4)); // true
+    ```
+
+2. **`Function<T, R>`**: 引数を受け取り、結果を返す関数を表します。
+    - 抽象メソッド: `R apply(T t)`
+    - 例: オブジェクトを別の型に変換するために使用されます。
+
+    ```java
+    Function<String, Integer> lengthFunction = (s) -> s.length();
+    System.out.println(lengthFunction.apply("Hello")); // 5
+    ```
+
+3. **`Consumer<T>`**: 引数を受け取り、結果を返さない操作を行う関数を表します。
+    - 抽象メソッド: `void accept(T t)`
+    - 例: 各要素に対して操作を行うために使用されます。
+
+    ```java
+    Consumer<String> printConsumer = (s) -> System.out.println(s);
+    printConsumer.accept("Hello, World!"); // Hello, World!
+    ```
+
+4. **`Supplier<T>`**: 引数を受け取らず、結果を返す関数を表します。
+    - 抽象メソッド: `T get()`
+    - 例: オブジェクトの供給を行うために使用されます。
+
+    ```java
+    Supplier<String> stringSupplier = () -> "Hello, Supplier!";
+    System.out.println(stringSupplier.get()); // Hello, Supplier!
+    ```
+
+5. **`BiFunction<T, U, R>`**: 2つの引数を受け取り、結果を返す関数を表します。
+    - 抽象メソッド: `R apply(T t, U u)`
+    - 例: 2つの引数を組み合わせて1つの結果を生成するために使用されます。
+
+    ```java
+    BiFunction<Integer, Integer, Integer> addFunction = (a, b) -> a + b;
+    System.out.println(addFunction.apply(2, 3)); // 5
+    ```
+
+### まとめ
+
+関数型インターフェースは、ラムダ式やメソッド参照を用いて簡潔に実装できるインターフェースであり、Java 8以降の関数型プログラミングの基盤となる重要な要素です。Java標準ライブラリには、さまざまな汎用的な関数型インターフェースが用意されており、それらを活用することで、よりシンプルで明確なコードを書くことができます。
