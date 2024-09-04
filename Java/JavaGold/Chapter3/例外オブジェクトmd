@@ -1,0 +1,81 @@
+**例外オブジェクト**とは、Javaにおいてプログラムの実行中に発生する異常な状況（エラーや不正な処理）を表現するために生成されるオブジェクトです。このオブジェクトは、エラーに関する情報を保持し、プログラムがその状況に対処するための手段を提供します。例外オブジェクトは、`Throwable`クラスまたはそのサブクラスのインスタンスとして作成されます。
+
+### 例外オブジェクトの基本概念
+
+1. **例外クラスのインスタンス**:
+   - 例外オブジェクトは、Javaで定義されている`Throwable`クラス、またはそのサブクラス（`Exception`や`Error`）のインスタンスです。
+   - 例外が発生すると、対応する例外クラスのオブジェクトが作成され、スローされます。
+
+2. **例外情報の格納**:
+   - 例外オブジェクトは、エラーの原因、スタックトレース（エラーが発生した場所の情報）、メッセージなどの詳細情報を保持します。この情報は、例外処理の際にエラーを特定し、デバッグするのに役立ちます。
+
+3. **例外のスローとキャッチ**:
+   - 例外オブジェクトは、`throw`キーワードを使ってスローされます。また、`try-catch`ブロックでキャッチすることにより、プログラムが異常な状況に適切に対処できます。
+
+### 例外オブジェクトの作成と使用例
+
+例外オブジェクトを生成するために、Javaでは次のように`new`キーワードで例外クラスのインスタンスを作成します。
+
+#### 例外のスロー
+```java
+public class Example {
+    public void divide(int a, int b) {
+        if (b == 0) {
+            // ArithmeticExceptionオブジェクトを作成し、スローする
+            throw new ArithmeticException("Cannot divide by zero");
+        }
+        System.out.println(a / b);
+    }
+}
+```
+このコードでは、`b`が0の場合に`ArithmeticException`という例外オブジェクトが生成され、スローされます。
+
+#### 例外のキャッチ
+```java
+public class Example {
+    public static void main(String[] args) {
+        try {
+            divide(10, 0);
+        } catch (ArithmeticException e) {
+            // 例外オブジェクトのメッセージを取得
+            System.out.println("Exception caught: " + e.getMessage());
+            e.printStackTrace(); // スタックトレースを出力
+        }
+    }
+
+    public static void divide(int a, int b) {
+        if (b == 0) {
+            throw new ArithmeticException("Cannot divide by zero");
+        }
+        System.out.println(a / b);
+    }
+}
+```
+このコードでは、`divide()`メソッド内でスローされた`ArithmeticException`オブジェクトが`catch`ブロックでキャッチされ、`getMessage()`メソッドや`printStackTrace()`メソッドを使って例外に関する詳細情報を出力します。
+
+### 例外オブジェクトのクラス階層
+
+Javaでは、すべての例外オブジェクトは`Throwable`クラスを基底クラスとしています。`Throwable`には2つの主要なサブクラスがあります。
+
+1. **`Exception`**:
+   - `Exception`クラスは、通常のプログラム内で処理可能な例外を表します。これには、チェック例外（コンパイル時に処理を強制される例外）と実行時例外（チェックされない例外）が含まれます。
+   
+   例: `IOException`, `SQLException`, `NullPointerException`, `ArrayIndexOutOfBoundsException`
+
+2. **`Error`**:
+   - `Error`クラスは、通常プログラムによって回復不能なエラーを表します。これには、JVMの内部エラーやメモリ不足の問題などがあります。
+   
+   例: `OutOfMemoryError`, `StackOverflowError`
+
+### 例外オブジェクトのメソッド
+
+例外オブジェクトには、エラーの情報を取得するためのメソッドがいくつか用意されています。
+
+- **`getMessage()`**: 例外に関するメッセージを取得します。
+- **`printStackTrace()`**: スタックトレース（エラーが発生したメソッドの呼び出し履歴）を出力します。
+- **`getCause()`**: 例外の原因となった他の例外オブジェクトを取得します。
+- **`getStackTrace()`**: スタックトレースを配列として取得します。
+
+### まとめ
+
+**例外オブジェクト**は、Javaプログラムで発生する異常な状況を表すために使用されるオブジェクトです。`Throwable`クラスのインスタンスとして生成され、例外情報（メッセージやスタックトレース）を保持します。例外オブジェクトは`throw`キーワードでスローされ、`try-catch`ブロックでキャッチして処理されます。
