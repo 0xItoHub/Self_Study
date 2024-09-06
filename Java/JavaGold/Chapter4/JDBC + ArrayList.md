@@ -1,9 +1,6 @@
 1. JDBCを使ったデータベース操作
 まず、JDBCを使ってデータベースからデータを取得し、結果をコレクションに格納する例を紹介します。検索結果をリストに保持する方法が一般的です。
 
-サンプルコード: JDBC + ArrayList を使用した例
-java
-コードをコピーする
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
