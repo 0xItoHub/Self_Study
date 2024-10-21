@@ -5,3 +5,4 @@
 5. Locateの設定（Japanese、Japan）
 6. Finish
 7. Windows左下の検索バーで「pgadmin」と入力し象のアイコンが表示されればOK
+ 
