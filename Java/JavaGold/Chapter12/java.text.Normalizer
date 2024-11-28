@@ -1,0 +1,107 @@
+Javaには標準ライブラリで「normalize」という名前のメソッドはありませんが、特定の目的に応じた「正規化」を行う機能がいくつか存在します。「正規化」とは、データを標準的な形式に変換する処理のことです。
+
+以下に、Javaでよく使われる「normalize」に関連する方法をいくつか紹介します。
+
+---
+
+### 1. **文字列の正規化 (Unicode Normalization)**
+Javaには、Unicodeの正規化形式を操作するための`java.text.Normalizer`クラスがあります。
+
+**使用例:**
+```java
+import java.text.Normalizer;
+
+public class Main {
+    public static void main(String[] args) {
+        String original = "é"; // eにアクサン記号がついた文字
+        String normalized = Normalizer.normalize(original, Normalizer.Form.NFD); // NFD形式に正規化
+
+        System.out.println("Original: " + original);
+        System.out.println("Normalized: " + normalized);
+    }
+}
+```
+
+**`Normalizer.Form`のオプション:**
+- **NFC (Normalization Form Canonical Composition)**: 標準的な構成で合成文字を使用
+- **NFD (Normalization Form Canonical Decomposition)**: 標準的な構成で分解文字を使用
+- **NFKC (Normalization Form Compatibility Composition)**: 互換性を考慮した合成形式
+- **NFKD (Normalization Form Compatibility Decomposition)**: 互換性を考慮した分解形式
+
+---
+
+### 2. **ファイルパスの正規化**
+`java.nio.file.Path`クラスの`normalize()`メソッドを使用すると、冗長な部分 (`..`や`./`) を削除してパスを正規化できます。
+
+**使用例:**
+```java
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class Main {
+    public static void main(String[] args) {
+        Path path = Paths.get("/home/user/../documents/./file.txt");
+        Path normalizedPath = path.normalize();
+
+        System.out.println("Original Path: " + path);
+        System.out.println("Normalized Path: " + normalizedPath);
+    }
+}
+```
+
+**出力:**
+```
+Original Path: /home/user/../documents/./file.txt
+Normalized Path: /home/documents/file.txt
+```
+
+---
+
+### 3. **データのスケーリングや正規化**
+機械学習やデータ分析では、数値データを特定の範囲にスケーリング（正規化）することがあります。この場合、外部ライブラリ（例：Apache Commons MathやNumPyのようなJavaバインディング）がよく使用されます。
+
+簡単な例として、データを`0`から`1`の範囲に正規化するコードを示します。
+
+**使用例:**
+```java
+public class Main {
+    public static void main(String[] args) {
+        double[] data = {10, 20, 30, 40, 50};
+        double min = Double.MAX_VALUE;
+        double max = Double.MIN_VALUE;
+
+        // 最大値と最小値を計算
+        for (double d : data) {
+            if (d < min) min = d;
+            if (d > max) max = d;
+        }
+
+        // 正規化
+        double[] normalizedData = new double[data.length];
+        for (int i = 0; i < data.length; i++) {
+            normalizedData[i] = (data[i] - min) / (max - min);
+        }
+
+        // 結果を出力
+        for (double d : normalizedData) {
+            System.out.println(d);
+        }
+    }
+}
+```
+
+**出力:**
+```
+0.0
+0.25
+0.5
+0.75
+1.0
+```
+
+---
+
+### 4. **カスタム正規化**
+特定のビジネスロジックに基づいてデータを正規化する場合、独自のメソッドを実装することもあります。
+
+---
